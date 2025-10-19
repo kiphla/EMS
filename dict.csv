@@ -1,0 +1,44 @@
+Users,1001,Id,int,Unique identifier of a user on the system
+Users,1002,Username,string,Username of a system user
+Users,1003,Password,string,Password of a system user
+Users,1004,CreatedDate,datetime,Date when the user was created
+EnvironmentalData,2000,Id,int,Base identifier for all environmental data records
+EnvironmentalData,2001,DateTime,datetime,Date and time when the data was collected
+EnvironmentalData,2002,Location,string,Location where the data was collected
+SoilData,3001,Id,int,Unique identifier of a soil data record
+SoilData,3002,DateTime,datetime,Inherited: Date and time when the data was collected
+SoilData,3003,Location,string,Inherited: Location where the data was collected
+SoilData,3004,PHLevel,float,pH level of the soil sample
+SoilData,3005,MoistureLevel,float,Moisture level of the soil sample
+SoilData,3006,NitrogenLevel,float,Nitrogen level in the soil sample
+SoilData,3007,PhosphorusLevel,float,Phosphorus level in the soil sample
+SoilData,3008,SulphurLevel,float,Sulphur level in the soil sample
+HydrologyData,4001,Id,int,Unique identifier of a hydrology data record
+HydrologyData,4002,DateTime,datetime,Inherited: Date and time when the data was collected
+HydrologyData,4003,Location,string,Inherited: Location where the data was collected
+HydrologyData,4004,WaterLevel,float,Water level measurement
+HydrologyData,4005,Rainfall,float,Rainfall measurement
+HydrologyData,4006,Salinity,float,Salinity level of the water
+HydrologyData,4007,PHLevel,float,pH level of the water
+HydrologyData,4008,DissolvedOxygen,float,Dissolved oxygen level in the water
+HydrologyData,4009,Turbidity,float,Turbidity measurement of the water
+HydrologyData,4010,Temperature,float,Temperature of the water
+HydrologyData,4011,PH,float,pH measurement of the water
+Species,5001,Id,int,Unique identifier of a species
+Species,5002,SpeciesName,string,Name of the species
+SpeciesData,6001,Id,int,Unique identifier of a species data record
+SpeciesData,6002,DateTime,datetime,Inherited: Date and time when the data was collected
+SpeciesData,6003,Location,string,Inherited: Location where the data was collected
+SpeciesData,6004,SpeciesId,int,Reference to the Species Id
+SpeciesData,6005,Population,int,Population count for the species
+Notifications,7001,Id,int,Unique identifier of a notification
+Notifications,7002,Title,string,Title of the notification
+Notifications,7003,Description,string,Detailed description of the notification
+Notifications,7004,CreatedDate,datetime,Date when the notification was created
+Notifications,7005,IsOngoing,boolean,Whether the notification is ongoing
+Notifications,7006,IsActive,boolean,Whether the notification is active
+Tasks,8001,Id,int,Unique identifier of a task
+Tasks,8002,Title,string,Title of the task
+Tasks,8003,Description,string,Detailed description of the task
+Tasks,8004,CreatedDate,datetime,Date when the task was created
+Tasks,8005,IsActive,boolean,Whether the task is active
