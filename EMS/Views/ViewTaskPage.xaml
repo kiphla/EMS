@@ -1,4 +1,4 @@
-﻿<Page x:Class="EMS.Views.ViewNotificationPage"
+<Page x:Class="EMS.Views.ViewTaskPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:EMS.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="View Notification">
+      Title="View Task">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
         <!-- Header -->
         <TextBlock x:Name="txtTitle" Grid.Row="0" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,20"/>
 
-        <!-- Notification Details -->
+        <!-- Task Details -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <!-- Creation Date -->
@@ -31,16 +31,6 @@
                     <TextBlock x:Name="txtCreationDate" Grid.Column="1"/>
                 </Grid>
 
-                <!-- Termination Date -->
-                <Grid Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Valid Until:" FontWeight="Bold" Margin="0,0,10,0"/>
-                    <TextBlock x:Name="txtTerminationDate" Grid.Column="1"/>
-                </Grid>
-
                 <!-- Description -->
                 <TextBlock Text="Description:" FontWeight="Bold" Margin="0,0,0,5"/>
                 <TextBlock x:Name="txtDescription" TextWrapping="Wrap"/>
@@ -49,7 +39,7 @@
 
         <!-- Buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="Terminate" Width="100" Height="30" Margin="0,0,10,0" Click="BtnTerminate_Click"/>
+            <Button Content="Mark as Done" Width="100" Height="30" Margin="0,0,10,0" Click="BtnMarkDone_Click"/>
             <Button Content="Home" Width="100" Height="30" Margin="0,0,10,0" Click="BtnHome_Click"/>
             <Button Content="Logout" Width="100" Height="30" Click="BtnLogout_Click"/>
         </StackPanel>

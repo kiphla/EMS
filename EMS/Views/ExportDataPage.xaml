@@ -5,10 +5,83 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EMS.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ExportDataPage">
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="Export Data">
 
-    <Grid>
-        
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Export Data" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Export Options -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Data Type Selection -->
+            <GroupBox Header="Select Data Type" Grid.Row="0" Margin="0,0,0,20">
+                <StackPanel Margin="10">
+                    <RadioButton x:Name="rbSoil" Content="Soil Data" Margin="0,0,0,5" IsChecked="True"/>
+                    <RadioButton x:Name="rbWater" Content="Water Data" Margin="0,0,0,5"/>
+                    <RadioButton x:Name="rbSpecies" Content="Species Data"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Date Range -->
+            <GroupBox Header="Date Range" Grid.Row="1" Margin="0,0,0,20">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="From:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <DatePicker x:Name="dpStartDate" Grid.Column="1" Margin="0,5"/>
+
+                    <TextBlock Text="To:" Grid.Column="2" VerticalAlignment="Center" Margin="10,0"/>
+                    <DatePicker x:Name="dpEndDate" Grid.Column="3" Margin="0,5"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Format Options -->
+            <GroupBox Header="Export Format" Grid.Row="2" Margin="0,0,0,20">
+                <StackPanel Margin="10">
+                    <RadioButton x:Name="rbCSV" Content="CSV (Comma Separated Values)" Margin="0,0,0,5" IsChecked="True"/>
+                    <RadioButton x:Name="rbJSON" Content="JSON" Margin="0,0,0,5"/>
+                    <RadioButton x:Name="rbXML" Content="XML"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Export Location -->
+            <Grid Grid.Row="3" Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="txtExportPath" IsReadOnly="True" VerticalContentAlignment="Center"/>
+                <Button Content="Browse..." Grid.Column="1" Width="100" Margin="10,0,0,0" Click="BtnBrowse_Click"/>
+            </Grid>
+        </Grid>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Home" Width="100" Height="30" Margin="0,0,10,0" Click="BtnHome_Click"/>
+            <Button Content="Export" Width="100" Height="30" Click="BtnExport_Click"/>
+        </StackPanel>
+
+        <!-- Status Message -->
+        <TextBlock x:Name="txtStatus" Grid.Row="2" VerticalAlignment="Center" Foreground="Green"/>
     </Grid>
 </Page>

@@ -5,10 +5,90 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EMS.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddWaterDataPage">
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Add Water Data">
 
-    <Grid>
-        
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Add New Water Data" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Input Form -->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Date and Time -->
+                    <TextBlock Text="Date:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <DatePicker x:Name="dpDate" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Time:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtTime" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- pH -->
+                    <TextBlock Text="pH Level:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtPH" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Dissolved Oxygen -->
+                    <TextBlock Text="Dissolved Oxygen:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtDissolvedOxygen" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Salinity -->
+                    <TextBlock Text="Salinity:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtSalinity" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Turbidity -->
+                    <TextBlock Text="Turbidity:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtTurbidity" Grid.Row="5" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Hardness -->
+                    <TextBlock Text="Hardness:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtHardness" Grid.Row="6" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Eutrophic Potential -->
+                    <TextBlock Text="Eutrophic Potential:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtEutrophicPotential" Grid.Row="7" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Microbiology -->
+                    <TextBlock Text="Microbiology Notes:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtMicrobiology" Grid.Row="8" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="60" Margin="0,0,0,10"/>
+
+                    <!-- Contaminants -->
+                    <TextBlock Text="Contaminants Notes:" Grid.Row="9" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtContaminants" Grid.Row="9" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="60" Margin="0,0,0,10"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Clear" Width="100" Height="30" Margin="0,0,10,0" Click="BtnClear_Click"/>
+            <Button Content="Add Record" Width="100" Height="30" Click="BtnAddRecord_Click"/>
+        </StackPanel>
+
+        <!-- Status Message -->
+        <TextBlock x:Name="txtStatus" Grid.Row="2" VerticalAlignment="Center" Foreground="Green"/>
     </Grid>
 </Page>

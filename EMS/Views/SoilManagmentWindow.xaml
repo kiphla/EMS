@@ -5,8 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EMS.Views"
         mc:Ignorable="d"
-        Title="SoilManagmentWindow" Height="450" Width="800">
-    <Grid>
+        Title="Soil Management" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Header with title and navigation -->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="Soil Data Management" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="Add New Data" Width="120" Height="30" Margin="20,0,0,0" Click="BtnAddSoilData_Click"/>
+            <Button Content="Home" Width="100" Height="30" Margin="20,0,0,0" Click="BtnHome_Click"/>
+            <Button Content="Logout" Width="100" Height="30" Margin="20,0,0,0" Click="BtnLogout_Click"/>
+        </StackPanel>
+
+        <!-- Data Grid for soil measurements -->
+        <DataGrid x:Name="dgSoilData" Grid.Row="1" Grid.Column="0" Margin="0,0,20,0" AutoGenerateColumns="False" 
+                  CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
+                <DataGridTextColumn Header="pH" Binding="{Binding pH}" Width="Auto"/>
+                <DataGridTextColumn Header="Firmness" Binding="{Binding Firmness}" Width="Auto"/>
+                <DataGridTextColumn Header="Density" Binding="{Binding Density}" Width="Auto"/>
+                <DataGridTextColumn Header="Moisture" Binding="{Binding Moisture}" Width="Auto"/>
+                <DataGridTextColumn Header="Nitrogen" Binding="{Binding Nitrogen}" Width="Auto"/>
+                <DataGridTextColumn Header="Organic Matter" Binding="{Binding OrganicMatter}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Visualization Panel -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ComboBox x:Name="cboMetric" Grid.Row="0" Margin="0,0,0,10" SelectionChanged="CboMetric_SelectionChanged">
+                <ComboBoxItem Content="pH Levels"/>
+                <ComboBoxItem Content="Moisture Trends"/>
+                <ComboBoxItem Content="Nitrogen Content"/>
+                <ComboBoxItem Content="Organic Matter"/>
+            </ComboBox>
+
+            <!-- Placeholder for the chart -->
+            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1">
+                <ContentControl x:Name="chartHolder"/>
+            </Border>
+        </Grid>
+
+        <!-- Notes/Details Panel -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="0,20,0,0">
+            <TextBlock Text="Notes and Observations" FontWeight="Bold"/>
+            <TextBlock x:Name="txtNotes" TextWrapping="Wrap" Margin="0,10,0,0"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -5,10 +5,53 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EMS.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddNewSpeciesPage">
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="Add New Species">
 
-    <Grid>
-        
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Add New Species" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Input Form -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Species Name:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="txtSpeciesName" Grid.Column="1" MinWidth="200"/>
+            <Button Content="Add Species" Width="100" Height="30" Grid.Column="2" Margin="10,0,0,0" Click="BtnAddSpecies_Click"/>
+        </Grid>
+
+        <!-- Existing Species List -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Existing Species" FontWeight="Bold" Margin="0,0,0,10"/>
+            
+            <DataGrid x:Name="dgSpecies" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding SpeciesID}" Width="Auto"/>
+                    <DataGridTextColumn Header="Species Name" Binding="{Binding SpeciesName}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="3">
+            <TextBlock x:Name="txtStatus"/>
+        </StatusBar>
     </Grid>
 </Page>

@@ -5,8 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EMS.Views"
         mc:Ignorable="d"
-        Title="SpeciesManagmentWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Species Management" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Header with title and navigation -->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="Species Management" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="Add New Species" Width="120" Height="30" Margin="20,0,0,0" Click="BtnAddSpecies_Click"/>
+            <Button Content="Add Species Data" Width="120" Height="30" Margin="20,0,0,0" Click="BtnAddSpeciesData_Click"/>
+            <Button Content="Home" Width="100" Height="30" Margin="20,0,0,0" Click="BtnHome_Click"/>
+            <Button Content="Logout" Width="100" Height="30" Margin="20,0,0,0" Click="BtnLogout_Click"/>
+        </StackPanel>
+
+        <!-- Species Selection and Data Grid -->
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ComboBox x:Name="cboSpecies" Grid.Row="0" Margin="0,0,0,10" SelectionChanged="CboSpecies_SelectionChanged"/>
+
+            <DataGrid x:Name="dgSpeciesData" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
+                    <DataGridTextColumn Header="Population Count" Binding="{Binding PopulationCount}" Width="Auto"/>
+                    <DataGridTextColumn Header="Scat Count" Binding="{Binding ScatCount}" Width="Auto"/>
+                    <DataGridTextColumn Header="Reproductive Factor" Binding="{Binding ReproductiveFactor}" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <!-- Visualization and Details Panel -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <ComboBox x:Name="cboMetric" Grid.Row="0" Margin="0,0,0,10" SelectionChanged="CboMetric_SelectionChanged">
+                <ComboBoxItem Content="Population Trends"/>
+                <ComboBoxItem Content="Reproductive Rates"/>
+                <ComboBoxItem Content="Activity Indicators"/>
+            </ComboBox>
+
+            <!-- Chart -->
+            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10">
+                <ContentControl x:Name="chartHolder"/>
+            </Border>
+
+            <!-- Details -->
+            <StackPanel Grid.Row="2">
+                <TextBlock Text="Species Details" FontWeight="Bold"/>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Known Habitats:" Grid.Row="0" Grid.Column="0" Margin="0,0,10,5"/>
+                    <TextBlock x:Name="txtHabitats" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap"/>
+
+                    <TextBlock Text="Health Concerns:" Grid.Row="1" Grid.Column="0" Margin="0,5,10,5"/>
+                    <TextBlock x:Name="txtHealthConcerns" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap"/>
+
+                    <TextBlock Text="Additional Notes:" Grid.Row="2" Grid.Column="0" Margin="0,5,10,0"/>
+                    <TextBlock x:Name="txtNotes" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Margin="0,20,0,0">
+            <TextBlock x:Name="txtStatus"/>
+        </StatusBar>
     </Grid>
 </Window>

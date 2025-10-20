@@ -5,10 +5,87 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EMS.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddSpeciesDataPage">
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Add Species Data">
 
-    <Grid>
-        
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Add New Species Data" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+            
+            <!-- Species Selection -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Select Species:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ComboBox x:Name="cboSpecies" Grid.Column="1" DisplayMemberPath="SpeciesName" MinWidth="200"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Input Form -->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Date -->
+                    <TextBlock Text="Date:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <DatePicker x:Name="dpDate" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Population Count -->
+                    <TextBlock Text="Population Count:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtPopulationCount" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Scat Count -->
+                    <TextBlock Text="Scat Count:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtScatCount" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Reproductive Factor -->
+                    <TextBlock Text="Reproductive Factor:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtReproductiveFactor" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10"/>
+
+                    <!-- Known Habitats -->
+                    <TextBlock Text="Known Habitats:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtKnownHabitats" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="60" Margin="0,0,0,10"/>
+
+                    <!-- Health Concerns -->
+                    <TextBlock Text="Health Concerns:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtHealthConcerns" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="60" Margin="0,0,0,10"/>
+
+                    <!-- Additional Notes -->
+                    <TextBlock Text="Additional Notes:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,10"/>
+                    <TextBox x:Name="txtNotes" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True" Height="60" Margin="0,0,0,10"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Clear" Width="100" Height="30" Margin="0,0,10,0" Click="BtnClear_Click"/>
+            <Button Content="Add Record" Width="100" Height="30" Click="BtnAddRecord_Click"/>
+        </StackPanel>
+
+        <!-- Status Message -->
+        <TextBlock x:Name="txtStatus" Grid.Row="2" VerticalAlignment="Center" Foreground="Green"/>
     </Grid>
 </Page>
