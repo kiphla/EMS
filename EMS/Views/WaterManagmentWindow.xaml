@@ -32,14 +32,15 @@
         <DataGrid x:Name="dgWaterData" Grid.Row="1" Grid.Column="0" Margin="0,0,20,0" AutoGenerateColumns="False" 
                   CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
-                <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="Auto"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=\{0:d\}}" Width="Auto"/>
                 <DataGridTextColumn Header="pH" Binding="{Binding pH}" Width="Auto"/>
-                <DataGridTextColumn Header="Dissolved Oxygen" Binding="{Binding DissolvedOxygen}" Width="Auto"/>
-                <DataGridTextColumn Header="Salinity" Binding="{Binding Salinity}" Width="Auto"/>
-                <DataGridTextColumn Header="Turbidity" Binding="{Binding Turbidity}" Width="Auto"/>
-                <DataGridTextColumn Header="Hardness" Binding="{Binding Hardness}" Width="Auto"/>
-                <DataGridTextColumn Header="Eutrophic Potential" Binding="{Binding EutrophicPotential}" Width="Auto"/>
+                <DataGridTextColumn Header="Dissolved Oxygen" Binding="{Binding dissolvedOxygen}" Width="Auto"/>
+                <DataGridTextColumn Header="Salinity" Binding="{Binding salinity}" Width="Auto"/>
+                <DataGridTextColumn Header="Turbidity" Binding="{Binding turbidity}" Width="Auto"/>
+                <DataGridTextColumn Header="Hardness" Binding="{Binding hardness}" Width="Auto"/>
+                <DataGridTextColumn Header="Eutrophic Potential" Binding="{Binding eutrophicPotential}" Width="Auto"/>
+                <DataGridTextColumn Header="Microbiology" Binding="{Binding microbiology}" Width="Auto"/>
+                <DataGridTextColumn Header="Contaminants" Binding="{Binding contaminants}" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
 

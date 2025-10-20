@@ -36,14 +36,20 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ComboBox x:Name="cboSpecies" Grid.Row="0" Margin="0,0,0,10" SelectionChanged="CboSpecies_SelectionChanged"/>
+            <ComboBox x:Name="cboSpecies" Grid.Row="0" Margin="0,0,0,10" 
+                      DisplayMemberPath="speciesName" 
+                      SelectedValuePath="speciesId"
+                      SelectionChanged="CboSpecies_SelectionChanged"/>
 
             <DataGrid x:Name="dgSpeciesData" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
-                    <DataGridTextColumn Header="Population Count" Binding="{Binding PopulationCount}" Width="Auto"/>
-                    <DataGridTextColumn Header="Scat Count" Binding="{Binding ScatCount}" Width="Auto"/>
-                    <DataGridTextColumn Header="Reproductive Factor" Binding="{Binding ReproductiveFactor}" Width="Auto"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=\{0:d\}}" Width="Auto"/>
+                    <DataGridTextColumn Header="Population Count" Binding="{Binding populationCount}" Width="Auto"/>
+                    <DataGridTextColumn Header="Scat Count" Binding="{Binding scatCount}" Width="Auto"/>
+                    <DataGridTextColumn Header="Reproductive Factor" Binding="{Binding reproductiveFactor}" Width="Auto"/>
+                    <DataGridTextColumn Header="Known Habitats" Binding="{Binding knownHabitats}" Width="Auto"/>
+                    <DataGridTextColumn Header="Health Concerns" Binding="{Binding healthConcerns}" Width="Auto"/>
+                    <DataGridTextColumn Header="Notes" Binding="{Binding notes}" Width="Auto"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

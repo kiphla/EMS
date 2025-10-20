@@ -1,23 +1,41 @@
-﻿using System.Windows;
+﻿using EMS.Core.Services;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace EMS.Views {
     public partial class SpeciesManagmentWindow : Window {
+        private readonly SpeciesManagement _speciesManagement;
+
         public SpeciesManagmentWindow() {
             InitializeComponent();
+            _speciesManagement = new SpeciesManagement();
             LoadSpecies();
-            LoadSpeciesData();
         }
 
         private void LoadSpecies() {
-            // TODO: Load species list from repository
-            // cboSpecies.ItemsSource = _speciesRepo.GetAllSpecies();
+            try {
+                var species = _speciesManagement.GetAllSpecies();
+                cboSpecies.ItemsSource = species;
+                cboSpecies.DisplayMemberPath = "name";
+                cboSpecies.SelectedValuePath = "id";
+            } catch (Exception ex) {
+                MessageBox.Show($"Error loading species: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void LoadSpeciesData() {
-            // TODO: Load species data from repository based on selected species
-            // if (cboSpecies.SelectedItem != null)
-            //     dgSpeciesData.ItemsSource = _speciesDataRepo.GetDataForSpecies(((Species)cboSpecies.SelectedItem).SpeciesID);
+        private void LoadSpeciesData(int speciesId) {
+            try {
+                var speciesData = _speciesManagement.GetSpeciesDataBySpecies(speciesId);
+                dgSpeciesData.ItemsSource = speciesData;
+            } catch (Exception ex) {
+                MessageBox.Show($"Error loading species data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CboSpecies_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (cboSpecies.SelectedValue is int speciesId) {
+                LoadSpeciesData(speciesId);
+            }
         }
 
         private void BtnAddSpecies_Click(object sender, RoutedEventArgs e) {
@@ -27,19 +45,34 @@ namespace EMS.Views {
                 Content = frame,
                 Title = "Add New Species",
                 Width = 800,
-                Height = 600
+                Height = 600,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+            window.Closed += (s, args) => {
+                LoadSpecies(); // Refresh the species list when the add window is closed
             };
             window.Show();
         }
 
         private void BtnAddSpeciesData_Click(object sender, RoutedEventArgs e) {
+            if (cboSpecies.SelectedItem == null) {
+                MessageBox.Show("Please select a species first.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             var frame = new Frame();
             frame.Content = new AddSpeciesDataPage();
             var window = new Window {
                 Content = frame,
                 Title = "Add Species Data",
                 Width = 800,
-                Height = 600
+                Height = 600,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+            window.Closed += (s, args) => {
+                if (cboSpecies.SelectedValue is int speciesId) {
+                    LoadSpeciesData(speciesId); // Refresh the data grid when the add window is closed
+                }
             };
             window.Show();
         }
@@ -56,14 +89,15 @@ namespace EMS.Views {
             }
         }
 
-        private void CboSpecies_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            LoadSpeciesData();
-        }
+        //private void CboSpecies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    LoadSpeciesData();
+        //}
 
         private void CboMetric_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (cboMetric.SelectedItem != null) {
                 // TODO: Update chart based on selected metric
-                // UpdateChart(((ComboBoxItem)cboMetric.SelectedItem).Content.ToString());
+                //UpdateChart(((ComboBoxItem)cboMetric.SelectedItem).Content.ToString());
             }
         }
     }
