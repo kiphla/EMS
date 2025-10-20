@@ -1,14 +1,23 @@
-﻿using EMS.Core.Models;
-using EMS.Core.Services;
-using System;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using EMS.Core.Services;
+using EMS.Core.Models;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.WPF;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace EMS.Views
 {
     public partial class SpeciesManagmentWindow : Window
     {
         private readonly SpeciesManagement _speciesManagement;
+        private List<SpeciesData> _currentSpeciesData = new();
 
         public SpeciesManagmentWindow()
         {
@@ -34,9 +43,10 @@ namespace EMS.Views
         {
             try
             {
-                var speciesData = _speciesManagement.GetSpeciesDataBySpecies(speciesId);
-                dgSpeciesData.ItemsSource = speciesData;
-                txtStatus.Text = $"Loaded {speciesData.Count} records.";
+                _currentSpeciesData = _speciesManagement.GetSpeciesDataBySpecies(speciesId).ToList();
+                dgSpeciesData.ItemsSource = _currentSpeciesData;
+                txtStatus.Text = $"Loaded {_currentSpeciesData.Count} records.";
+                UpdateChart(((ComboBoxItem)cboMetric.SelectedItem)?.Content?.ToString() ?? "Population Trends");
             }
             catch (Exception ex)
             {
@@ -120,12 +130,57 @@ namespace EMS.Views
         //    LoadSpeciesData();
         //}
 
+        private void UpdateChart(string metric)
+        {
+            if (_currentSpeciesData == null || _currentSpeciesData.Count == 0) return;
+
+            var values = metric switch
+            {
+                "Population Trends" => _currentSpeciesData.Select(d => (double)d.populationCount),
+                "Reproductive Rates" => _currentSpeciesData.Select(d => (double)d.reproductiveFactor),
+                "Activity Indicators" => _currentSpeciesData.Select(d => (double)d.scatCount),
+                _ => _currentSpeciesData.Select(d => (double)d.populationCount)
+            };
+
+            var dates = _currentSpeciesData.Select(d => d.date.ToString("MM/dd")).ToArray();
+
+            var chart = new CartesianChart
+            {
+                Series = new ISeries[]
+                {
+                    new LineSeries<double>
+                    {
+                        Values = values.ToArray(),
+                        Fill = null,
+                        GeometrySize = 10,
+                        Name = metric
+                    }
+                },
+                XAxes = new Axis[]
+                {
+                    new Axis
+                    {
+                        Labels = dates,
+                        LabelsRotation = 45
+                    }
+                },
+                YAxes = new Axis[]
+                {
+                    new Axis
+                    {
+                        Name = metric
+                    }
+                }
+            };
+
+            chartHolder.Content = chart;
+        }
+
         private void CboMetric_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cboMetric.SelectedItem != null)
+            if (cboMetric.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content is string content)
             {
-                // TODO: Update chart based on selected metric
-                //UpdateChart(((ComboBoxItem)cboMetric.SelectedItem).Content.ToString());
+                UpdateChart(content);
             }
         }
     }
