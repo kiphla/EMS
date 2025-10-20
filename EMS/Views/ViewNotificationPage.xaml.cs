@@ -1,25 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EMS.Core.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EMS.Views {
-    /// <summary>
-    /// Interaction logic for ViewNotificationPage.xaml
-    /// </summary>
     public partial class ViewNotificationPage : Page {
-        public ViewNotificationPage() {
+        private readonly Notification currentNotification;
+
+        public ViewNotificationPage(Notification notification) {
             InitializeComponent();
+            currentNotification = notification;
+            LoadNotificationDetails();
+        }
+
+        private void LoadNotificationDetails() {
+            //txtTitle.Text = currentNotification.Title;
+            //txtCreationDate.Text = currentNotification.CreationDate.ToShortDateString();
+            //txtTerminationDate.Text = currentNotification.TerminationDate?.ToShortDateString() ?? "Ongoing";
+            //txtDescription.Text = currentNotification.Description;
+        }
+
+        private void BtnTerminate_Click(object sender, RoutedEventArgs e) {
+            // TODO: Update notification in repository
+            // currentNotification.Active = false;
+            // _notificationRepo.Update(currentNotification);
+
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null) {
+                parentWindow.Close();
+            }
+        }
+
+        private void BtnHome_Click(object sender, RoutedEventArgs e) {
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null) {
+                parentWindow.Close();
+            }
+        }
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e) {
+            var logoutWindow = new LogoutWindow();
+            Window parentWindow = Window.GetWindow(this);
+            if (logoutWindow.ShowDialog() == true && parentWindow != null) {
+                Application.Current.MainWindow.Show();
+                parentWindow.Close();
+            }
         }
     }
 }

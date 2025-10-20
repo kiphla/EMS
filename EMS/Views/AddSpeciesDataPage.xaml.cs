@@ -1,25 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EMS.Views {
-    /// <summary>
-    /// Interaction logic for AddSpeciesDataPage.xaml
-    /// </summary>
     public partial class AddSpeciesDataPage : Page {
         public AddSpeciesDataPage() {
             InitializeComponent();
+            dpDate.SelectedDate = DateTime.Today;
+            LoadSpecies();
+        }
+
+        private void LoadSpecies() {
+            // TODO: Load species from repository
+            // cboSpecies.ItemsSource = _speciesRepo.GetAllSpecies();
+        }
+
+        private void BtnClear_Click(object sender, RoutedEventArgs e) {
+            dpDate.SelectedDate = DateTime.Today;
+            cboSpecies.SelectedIndex = -1;
+            txtPopulationCount.Text = string.Empty;
+            txtScatCount.Text = string.Empty;
+            txtReproductiveFactor.Text = string.Empty;
+            txtKnownHabitats.Text = string.Empty;
+            txtHealthConcerns.Text = string.Empty;
+            txtNotes.Text = string.Empty;
+            txtStatus.Text = string.Empty;
+        }
+
+        private void BtnAddRecord_Click(object sender, RoutedEventArgs e) {
+            if (cboSpecies.SelectedItem == null) {
+                txtStatus.Text = "Please select a species.";
+                return;
+            }
+
+            // TODO: Validate input and save species data to repository
+            // var speciesData = new SpeciesData
+            // {
+            //     SpeciesID = ((Species)cboSpecies.SelectedItem).SpeciesID,
+            //     Date = dpDate.SelectedDate.Value,
+            //     PopulationCount = int.Parse(txtPopulationCount.Text),
+            //     // ... other properties
+            // };
+            // _speciesDataRepo.Add(speciesData);
+
+            txtStatus.Text = "Species data record added successfully.";
+            BtnClear_Click(sender, e);
         }
     }
 }

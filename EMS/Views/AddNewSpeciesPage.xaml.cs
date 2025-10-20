@@ -1,25 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EMS.Views {
-    /// <summary>
-    /// Interaction logic for AddNewSpeciesPage.xaml
-    /// </summary>
     public partial class AddNewSpeciesPage : Page {
         public AddNewSpeciesPage() {
             InitializeComponent();
+            LoadExistingSpecies();
+        }
+
+        private void LoadExistingSpecies() {
+            // TODO: Load species from repository
+            // dgSpecies.ItemsSource = _speciesRepo.GetAllSpecies();
+        }
+
+        private void BtnAddSpecies_Click(object sender, RoutedEventArgs e) {
+            if (string.IsNullOrWhiteSpace(txtSpeciesName.Text)) {
+                txtStatus.Text = "Please enter a species name.";
+                return;
+            }
+
+            // TODO: Add species to repository
+            // var species = new Species { SpeciesName = txtSpeciesName.Text };
+            // _speciesRepo.Add(species);
+
+            txtSpeciesName.Text = string.Empty;
+            txtStatus.Text = "Species added successfully.";
+            LoadExistingSpecies();
         }
     }
 }

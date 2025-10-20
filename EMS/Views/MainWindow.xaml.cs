@@ -2,6 +2,7 @@
 using EMS.Core.Repositories;
 using EMS.Views;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace EMS
 {
@@ -34,38 +35,62 @@ namespace EMS
         // Button click handlers - open new windows for modules
         private void BtnSoil_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new SoilManagementWindow(currentUser);
-            //WindowManager.Open(this, window);
+            var window = new SoilManagmentWindow();
+            WindowManager.Open(this, window);
         }
 
         private void BtnWater_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new WaterManagementWindow(currentUser);
-            //WindowManager.Open(this, window);
+            var window = new WaterManagmentWindow();
+            WindowManager.Open(this, window);
         }
 
         private void BtnSpecies_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new SpeciesManagementWindow(currentUser);
-            //WindowManager.Open(this, window);
+            var window = new SpeciesManagmentWindow();
+            WindowManager.Open(this, window);
         }
 
         private void BtnNotifications_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new NotificationsWindow(currentUser);
-            //WindowManager.Open(this, window);
+            var frame = new Frame();
+            frame.Content = new SetNotificationPage();
+            var window = new Window
+            {
+                Content = frame,
+                Title = "Set Notification",
+                Width = 800,
+                Height = 600
+            };
+            window.Show();
         }
 
         private void BtnTasks_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new TasksWindow(currentUser);
-            //WindowManager.Open(this, window);
+            var frame = new Frame();
+            frame.Content = new SetTaskPage();
+            var window = new Window
+            {
+                Content = frame,
+                Title = "Set Task",
+                Width = 800,
+                Height = 600
+            };
+            window.Show();
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            //var window = new ExportDataWindow(currentUser);
-            //WindowManager.Open(this, window);
+            var frame = new Frame();
+            frame.Content = new ExportDataPage();
+            var window = new Window
+            {
+                Content = frame,
+                Title = "Export Data",
+                Width = 800,
+                Height = 600
+            };
+            window.Show();
         }
 
         private void BtnUserDetails_Click(object sender, RoutedEventArgs e)

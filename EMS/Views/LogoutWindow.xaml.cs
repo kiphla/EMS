@@ -1,22 +1,17 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
-namespace EMS.Views
-{
-    public partial class LogoutWindow : Window
-    {
-        public LogoutWindow()
-        {
+namespace EMS.Views {
+    public partial class LogoutWindow : Window {
+        public LogoutWindow() {
             InitializeComponent();
         }
 
-        private void BtnYes_Click(object sender, RoutedEventArgs e)
-        {
+        private void BtnYes_Click(object sender, RoutedEventArgs e) {
             // Prevent app shutdown while closing windows
             var previousMode = Application.Current.ShutdownMode;
             Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            WindowManager.CloseAll();
+            //WindowManager.CloseAll();
 
             var login = new LoginWindow();
             login.Show();
@@ -26,8 +21,7 @@ namespace EMS.Views
             this.Close();
         }
 
-        private void BtnNo_Click(object sender, RoutedEventArgs e)
-        {
+        private void BtnNo_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
     }
