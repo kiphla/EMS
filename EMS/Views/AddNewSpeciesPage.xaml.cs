@@ -1,31 +1,59 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using EMS.Core.Models;
+using EMS.Core.Services;
 
-namespace EMS.Views {
-    public partial class AddNewSpeciesPage : Page {
-        public AddNewSpeciesPage() {
+namespace EMS.Views
+{
+    public partial class AddNewSpeciesPage : Page
+    {
+        private readonly SpeciesManagement _speciesManagement;
+
+        public AddNewSpeciesPage()
+        {
             InitializeComponent();
+            _speciesManagement = new SpeciesManagement();
             LoadExistingSpecies();
         }
 
-        private void LoadExistingSpecies() {
-            // TODO: Load species from repository
-            // dgSpecies.ItemsSource = _speciesRepo.GetAllSpecies();
-        }
-
-        private void BtnAddSpecies_Click(object sender, RoutedEventArgs e) {
-            if (string.IsNullOrWhiteSpace(txtSpeciesName.Text)) {
-                txtStatus.Text = "Please enter a species name.";
-                return;
+        private void LoadExistingSpecies()
+        {
+            try
+            {
+                var species = _speciesManagement.GetAllSpecies();
+                dgSpecies.ItemsSource = species;
             }
+            catch (Exception ex)
+            {
+                txtStatus.Text = $"Error loading species: {ex.Message}";
+            }
+        }
 
-            // TODO: Add species to repository
-            // var species = new Species { SpeciesName = txtSpeciesName.Text };
-            // _speciesRepo.Add(species);
+        private void BtnAddSpecies_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtSpeciesName.Text))
+                {
+                    txtStatus.Text = "Please enter a species name.";
+                    return;
+                }
 
-            txtSpeciesName.Text = string.Empty;
-            txtStatus.Text = "Species added successfully.";
-            LoadExistingSpecies();
+                var species = new Species
+                {
+                    speciesName = txtSpeciesName.Text
+                };
+
+                _speciesManagement.AddSpecies(species);
+                txtSpeciesName.Text = string.Empty;
+                txtStatus.Text = "Species added successfully.";
+                LoadExistingSpecies();
+            }
+            catch (Exception ex)
+            {
+                txtStatus.Text = $"Error adding species: {ex.Message}";
+            }
         }
     }
 }

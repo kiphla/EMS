@@ -3,27 +3,40 @@ using EMS.Core.Services;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace EMS.Views {
-    public partial class AddSpeciesDataPage : Page {
+namespace EMS.Views
+{
+    public partial class AddSpeciesDataPage : Page
+    {
         private readonly SpeciesManagement _speciesManagement;
 
-        public AddSpeciesDataPage() {
+        public AddSpeciesDataPage(Species? preSelectedSpecies = null)
+        {
             InitializeComponent();
             _speciesManagement = new SpeciesManagement();
             dpDate.SelectedDate = DateTime.Today;
             LoadSpecies();
+
+            if (preSelectedSpecies != null)
+            {
+                cboSpecies.SelectedValue = preSelectedSpecies.speciesID;
+            }
         }
 
-        private void LoadSpecies() {
-            try {
+        private void LoadSpecies()
+        {
+            try
+            {
                 var species = _speciesManagement.GetAllSpecies();
                 cboSpecies.ItemsSource = species;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show($"Error loading species: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private bool ValidateInputs() {
+        private bool ValidateInputs()
+        {
             if (!dpDate.SelectedDate.HasValue) return false;
             if (cboSpecies.SelectedItem == null) return false;
             if (string.IsNullOrWhiteSpace(txtPopulationCount.Text)) return false;
@@ -33,7 +46,8 @@ namespace EMS.Views {
             return true;
         }
 
-        private void BtnClear_Click(object sender, RoutedEventArgs e) {
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
             dpDate.SelectedDate = DateTime.Today;
             cboSpecies.SelectedIndex = -1;
             txtPopulationCount.Text = string.Empty;
@@ -45,14 +59,18 @@ namespace EMS.Views {
             txtStatus.Text = string.Empty;
         }
 
-        private void BtnAddRecord_Click(object sender, RoutedEventArgs e) {
-            try {
-                if (!ValidateInputs()) {
+        private void BtnAddRecord_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!ValidateInputs())
+                {
                     txtStatus.Text = "Please fill in all required fields with valid values.";
                     return;
                 }
 
-                var speciesData = new SpeciesData {
+                var speciesData = new SpeciesData
+                {
                     speciesID = ((Species)cboSpecies.SelectedItem).speciesID,
                     date = dpDate.SelectedDate!.Value,
                     populationCount = int.Parse(txtPopulationCount.Text),
@@ -66,7 +84,9 @@ namespace EMS.Views {
                 _speciesManagement.AddSpeciesData(speciesData);
                 txtStatus.Text = "Species data record added successfully.";
                 BtnClear_Click(sender, e);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 txtStatus.Text = $"Error adding species data: {ex.Message}";
             }
         }

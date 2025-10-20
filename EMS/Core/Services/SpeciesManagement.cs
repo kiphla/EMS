@@ -1,46 +1,60 @@
 ﻿using EMS.Core.Models;
 using EMS.Core.Repositories;
 
-namespace EMS.Core.Services {
-    public class SpeciesManagement {
+namespace EMS.Core.Services
+{
+    public class SpeciesManagement
+    {
         private readonly SpeciesRepository _speciesRepository;
         private readonly SpeciesDataRepository _speciesDataRepository;
         private readonly NotificationsRepository _notificationsRepository;
 
-        public SpeciesManagement() {
+        public SpeciesManagement()
+        {
             _speciesRepository = new SpeciesRepository();
             _speciesDataRepository = new SpeciesDataRepository();
             _notificationsRepository = new NotificationsRepository();
         }
 
-        public List<Species> GetAllSpecies() {
+        public List<Species> GetAllSpecies()
+        {
             return _speciesRepository.GetAll();
         }
 
-        public void AddSpeciesData(SpeciesData speciesData) {
+        public void AddSpecies(Species species)
+        {
+            _speciesRepository.Add(species);
+        }
+
+        public void AddSpeciesData(SpeciesData speciesData)
+        {
             _speciesDataRepository.Add(speciesData);
             CheckSpeciesConditionsAndNotify(speciesData);
         }
 
-        public List<SpeciesData> GetAllSpeciesData() {
+        public List<SpeciesData> GetAllSpeciesData()
+        {
             return _speciesDataRepository.GetAll();
         }
 
-        public List<SpeciesData> GetSpeciesDataBySpecies(int speciesId) {
+        public List<SpeciesData> GetSpeciesDataBySpecies(int speciesId)
+        {
             return _speciesDataRepository.GetAll()
                 .Where(s => s.speciesID == speciesId)
                 .OrderBy(s => s.date)
                 .ToList();
         }
 
-        public List<SpeciesData> GetSpeciesDataInRange(DateTime startDate, DateTime endDate) {
+        public List<SpeciesData> GetSpeciesDataInRange(DateTime startDate, DateTime endDate)
+        {
             return _speciesDataRepository.GetAll()
                 .Where(s => s.date >= startDate && s.date <= endDate)
                 .OrderBy(s => s.date)
                 .ToList();
         }
 
-        private void CheckSpeciesConditionsAndNotify(SpeciesData speciesData) {
+        private void CheckSpeciesConditionsAndNotify(SpeciesData speciesData)
+        {
             var species = _speciesRepository.GetById(speciesData.speciesID);
             if (species == null) return;
 
@@ -50,7 +64,8 @@ namespace EMS.Core.Services {
                 .Take(5)
                 .ToList();
 
-            if (recentData.Count >= 2) {
+            if (recentData.Count >= 2)
+            {
                 var populationTrend = CalculatePopulationTrend(recentData);
                 if (populationTrend < -0.2) // 20% decline
                 {
@@ -60,13 +75,15 @@ namespace EMS.Core.Services {
             }
 
             // Check health concerns
-            if (!string.IsNullOrEmpty(speciesData.healthConcerns)) {
+            if (!string.IsNullOrEmpty(speciesData.healthConcerns))
+            {
                 CreateSpeciesAlert($"{species.speciesName} Health Alert",
                     $"Health concerns reported for {species.speciesName}: {speciesData.healthConcerns}");
             }
         }
 
-        private double CalculatePopulationTrend(List<SpeciesData> data) {
+        private double CalculatePopulationTrend(List<SpeciesData> data)
+        {
             if (data.Count < 2) return 0;
 
             var oldest = data.Last().populationCount;
@@ -75,8 +92,10 @@ namespace EMS.Core.Services {
             return (newest - oldest) / (double)oldest;
         }
 
-        private void CreateSpeciesAlert(string title, string description) {
-            var notification = new Notification {
+        private void CreateSpeciesAlert(string title, string description)
+        {
+            var notification = new Notification
+            {
                 userID = 1, // TODO: Get current user ID
                 creationDate = DateTime.Now,
                 terminationDate = DateTime.Now.AddDays(7),

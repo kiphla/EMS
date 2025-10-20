@@ -26,7 +26,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Select Species:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox x:Name="cboSpecies" Grid.Column="1" DisplayMemberPath="SpeciesName" MinWidth="200"/>
+                <ComboBox x:Name="cboSpecies" Grid.Column="1" 
+                         DisplayMemberPath="speciesName"
+                         SelectedValuePath="speciesID"
+                         MinWidth="200"/>
             </Grid>
         </StackPanel>
 
