@@ -1,13 +1,23 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using EMS.Core.Services;
+using EMS.Core.Models;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.WPF;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace EMS.Views
 {
     public partial class SoilManagmentWindow : Window
     {
         private readonly SoilManagement _soilManagement;
+        private List<SoilData> _currentData = new();
 
         public SoilManagmentWindow()
         {
@@ -20,8 +30,9 @@ namespace EMS.Views
         {
             try
             {
-                var soilData = _soilManagement.GetAllSoilData();
-                dgSoilData.ItemsSource = soilData;
+                _currentData = _soilManagement.GetAllSoilData().ToList();
+                dgSoilData.ItemsSource = _currentData;
+                UpdateChart(((ComboBoxItem)cboMetric.SelectedItem)?.Content?.ToString() ?? "pH Levels");
             }
             catch (Exception ex)
             {
@@ -65,12 +76,58 @@ namespace EMS.Views
             }
         }
 
+        private void UpdateChart(string metric)
+        {
+            if (_currentData == null || _currentData.Count == 0) return;
+
+            var values = metric switch
+            {
+                "pH Levels" => _currentData.Select(d => (double)d.pH),
+                "Moisture Trends" => _currentData.Select(d => (double)d.moisture),
+                "Nitrogen Content" => _currentData.Select(d => (double)d.nitrogen),
+                "Organic Matter" => _currentData.Select(d => (double)d.organicMatter),
+                _ => _currentData.Select(d => (double)d.pH)
+            };
+
+            var dates = _currentData.Select(d => d.date.ToString("MM/dd")).ToArray();
+
+            var chart = new CartesianChart
+            {
+                Series = new ISeries[]
+                {
+                    new LineSeries<double>
+                    {
+                        Values = values.ToArray(),
+                        Fill = null,
+                        GeometrySize = 10,
+                        Name = metric
+                    }
+                },
+                XAxes = new Axis[]
+                {
+                    new Axis
+                    {
+                        Labels = dates,
+                        LabelsRotation = 45
+                    }
+                },
+                YAxes = new Axis[]
+                {
+                    new Axis
+                    {
+                        Name = metric
+                    }
+                }
+            };
+
+            chartHolder.Content = chart;
+        }
+
         private void CboMetric_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cboMetric.SelectedItem != null)
+            if (cboMetric.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content is string content)
             {
-                // TODO: Update chart based on selected metric
-                // UpdateChart(((ComboBoxItem)cboMetric.SelectedItem).Content.ToString());
+                UpdateChart(content);
             }
         }
     }
