@@ -5,11 +5,16 @@
 namespace EMS.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSpeciesRelation : Migration
+    public partial class CompleteDbSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "UserID",
+                table: "Users",
+                newName: "userID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_SpeciesData_speciesID",
                 table: "SpeciesData",
@@ -34,6 +39,11 @@ namespace EMS.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_SpeciesData_speciesID",
                 table: "SpeciesData");
+
+            migrationBuilder.RenameColumn(
+                name: "userID",
+                table: "Users",
+                newName: "UserID");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using EMS.Core.Data;
 
 namespace EMS
 {
@@ -14,9 +15,14 @@ namespace EMS
         {
             base.OnStartup(e);
 
+            // Initialize the database
+            using (var context = new AppDbContext())
+            {
+                DbInitializer.Initialize(context);
+            }
+
             LoginWindow login = new LoginWindow();
             login.Show();
         }
     }
-
 }

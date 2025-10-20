@@ -145,7 +145,7 @@ namespace EMS.Migrations
 
             modelBuilder.Entity("EMS.Core.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("userID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -173,7 +173,7 @@ namespace EMS.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserID");
+                    b.HasKey("userID");
 
                     b.ToTable("Users");
                 });

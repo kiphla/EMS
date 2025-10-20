@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251018072226_AddSpeciesRelation")]
-    partial class AddSpeciesRelation
+    [Migration("20251020072249_CompleteDbSetup")]
+    partial class CompleteDbSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -148,7 +148,7 @@ namespace EMS.Migrations
 
             modelBuilder.Entity("EMS.Core.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("userID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -176,7 +176,7 @@ namespace EMS.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserID");
+                    b.HasKey("userID");
 
                     b.ToTable("Users");
                 });
