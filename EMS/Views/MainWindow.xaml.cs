@@ -22,6 +22,16 @@ namespace EMS
             LoadTasks();
         }
 
+        public void RefreshNotifications()
+        {
+            LoadNotifications();
+        }
+
+        public void RefreshTasks()
+        {
+            LoadTasks();
+        }
+
         private void LoadNotifications()
         {
             dgNotifications.ItemsSource = _notificationRepo.GetActiveByUser(currentUser.userID);
@@ -54,28 +64,34 @@ namespace EMS
         private void BtnNotifications_Click(object sender, RoutedEventArgs e)
         {
             var frame = new Frame();
-            frame.Content = new SetNotificationPage();
+            frame.Content = new SetNotificationPage(currentUser);
             var window = new Window
             {
                 Content = frame,
                 Title = "Set Notification",
                 Width = 800,
-                Height = 600
+                Height = 600,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Owner = this
             };
+            window.Closed += (s, args) => LoadNotifications();
             window.Show();
         }
 
         private void BtnTasks_Click(object sender, RoutedEventArgs e)
         {
             var frame = new Frame();
-            frame.Content = new SetTaskPage();
+            frame.Content = new SetTaskPage(currentUser);
             var window = new Window
             {
                 Content = frame,
                 Title = "Set Task",
                 Width = 800,
-                Height = 600
+                Height = 600,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Owner = this
             };
+            window.Closed += (s, args) => LoadTasks();
             window.Show();
         }
 
